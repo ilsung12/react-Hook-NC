@@ -2,6 +2,11 @@ import React, {useState, useEffect, useRef} from "react";
 import ReactDOM from "react-dom";
 
 const useBeforLeave = (onBefore) => {
+  useEffect(()=>{
+    document.addEventListener("mouseLeave", handle)
+    return () => document.removeEventListener("mouseLeave", handle)
+  }, [])
+  
   if(typeof onBefore !== "function"){
     return;
   }
@@ -10,13 +15,9 @@ const useBeforLeave = (onBefore) => {
     if (clientY <= 0) {
       onBefore()
     }
-    
   };
 
-  useEffect(()=>{
-    document.addEventListener("mouseLeave", handle)
-    return () => document.removeEventListener("mouseLeave", handle)
-  }, [])
+  
 };
 
 
@@ -31,4 +32,6 @@ const App = () => {
 
 }
 
-export default App;
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
